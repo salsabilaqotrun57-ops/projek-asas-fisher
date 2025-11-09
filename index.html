@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ujian Pengetahuan Kuantitatif</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- LOGIN PAGE -->
+  <main id="login-page" class="page active">
+    <div class="card login-card">
+      <div class="brand">
+        <div class="logo">PK</div>
+        <h1>Ujian Pengetahuan Kuantitatif</h1>
+      </div>
+
+      <label for="name" class="lbl">Nama</label>
+      <input id="name" type="text" placeholder="Masukkan nama Anda" />
+
+      <label for="password" class="lbl">Password</label>
+      <div class="pwd-row">
+        <input id="password" type="password" placeholder="Masukkan password" />
+        <button id="togglePwd" class="eye" aria-label="Tampilkan password">
+          <svg id="eyeIcon" viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
+
+      <button id="loginBtn" class="btn primary">Masuk</button>
+    </div>
+  </main>
+
+  <!-- EXAM PAGE -->
+  <main id="exam-page" class="page">
+    <div class="card exam-card">
+      <header class="exam-head">
+        <div class="exam-title">Ujian Pengetahuan Kuantitatif</div>
+        <div id="timer" class="exam-timer">60:00</div>
+      </header>
+
+      <div id="qNumbers" class="q-numbers" aria-hidden="false"></div>
+
+      <section id="questionBox" class="question-box" aria-live="polite"></section>
+
+      <div class="nav-row">
+        <button id="prevBtn" class="btn secondary">Sebelumnya</button>
+        <div class="nav-right">
+          <button id="nextBtn" class="btn secondary">Berikutnya</button>
+          <button id="submitBtn" class="btn danger">Kumpulkan Jawaban</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- RESULT PAGE -->
+  <main id="result-page" class="page">
+    <div class="card result-card">
+      <h2>Hasil Ujian</h2>
+
+      <div class="result-top">
+        <div class="chart-wrap">
+          <!-- fixed size canvas to avoid zoom issues -->
+          <canvas id="resultChart" width="260" height="260"></canvas>
+        </div>
+        <div class="score-box">
+          <div id="scoreSummary" class="score-summary"></div>
+          <div id="scoreUTBK" class="score-utbk"></div>
+        </div>
+      </div>
+
+      <div id="explanations" class="explanations"></div>
+
+      <div style="text-align:center;margin-top:16px">
+        <button id="finishBtn" class="btn primary">Selesai</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

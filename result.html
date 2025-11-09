@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Hasil Ujian • CBT PK</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page card container fade-in">
+    <header class="exam-header">
+      <div class="left">
+        <h2>Hasil Ujian • CBT Pengetahuan Kuantitatif</h2>
+      </div>
+      <div class="right">
+        <div id="timeRem" class="muted small"></div>
+      </div>
+    </header>
+
+    <section id="summary" class="card"></section>
+
+    <section id="breakdown" class="card"></section>
+
+    <div style="text-align:center;margin-top:12px;">
+      <button id="restartBtn" class="btn">Kembali ke Login</button>
+      <button id="clearBtn" class="btn ghost">Hapus Hasil</button>
+    </div>
+  </div>
+
+  <script>
+    // membaca hasil dari localStorage
+    const data = JSON.parse(localStorage.getItem('cbt_result') || 'null');
+    const summary = document.getElementById('summary');
+    const breakdown = document.getElementById('breakdown');
+    const timeRem = document.getElementById('timeRem');
+
+    if (!data) {
+      summary.innerHTML = '<p class="muted">Tidak ada data hasil. Pastikan kamu sudah menyelesaikan ujian.</p>';
+    } else {
+      timeRem.textContent = 'Waktu tersisa saat submit: ' + (data.timeRemaining || '-');
+      summary.innerHTML = `<p class="muted">Peserta: <strong>${data.name}</strong></p>
+        <h3>Skor: ${data.score} / ${data.total}</h3>
+        <p class="muted">Benar: ${data.score} • Salah: ${data.total - data.score} • Total Soal: ${data.total}</p>`;
+
+      // breakdown per soal
+      let html = '';
+      data.details.forEach((d, i) => {
+        const your = (d.yourIndex === null || d.yourIndex === undefined) ? '<em>Belum dijawab</em>' : d.options[d.yourIndex];
+        const key = d.options[d.correctIndex];
+        html += `<div class="result-explan">
+          <strong>${i+1}. ${d.q}</strong><br>
+          Jawaban kamu: ${your}<br>
+          <b>Kunci: ${key}</b><br>
+          <em>${d.explanation}</em>
+        </div>`;
+      });
+      breakdown.innerHTML = html;
+    }
+
+    document.getElementById('restartBtn').addEventListener('click', () => {
+      // clear progress (but keep username) and kembali ke login
+      localStorage.removeItem('cbt_progress');
+      window.location.href = 'index.html';
+    });
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      localStorage.removeItem('cbt_result');
+      alert('Hasil dihapus.');
+      window.location.reload();
+    });
+  </script>
+</body>
+</html>
